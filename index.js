@@ -66,6 +66,7 @@ client.on("message", async message => {
     var guild = client.guilds.array();
     var guildchannel = message.channel.id;
     switch(guildchannel) { // Can sort images based of the channel they were posted in
+        // https://discord.gg/twice
         case "138195029607841792":
             saveImage("Nayeon", message);
             break;
@@ -96,9 +97,43 @@ client.on("message", async message => {
         case "166845635717365761":
             saveImage("Group",  message);
             break;
+
+        // https://discord.gg/fC76MQG --> TWICE MEMES
+        case "533551254723624960":
+            saveImage("Nayeon", message);
+            break;
+        case "533551354048937985":
+            saveImage("Sana", message);
+            break;
+        case "533551283865518080":
+            saveImage("Jeongyeon", message);
+            break;
+        case "533551327419039754":
+            saveImage("Momo", message);
+            break;
+        case "533551413800992769":
+            saveImage("Jihyo", message);
+            break;
+        case "533551442297094155":
+            saveImage("Mina", message);
+            break;
+        case "533551478787276800":
+            saveImage("Dahyun", message);
+            break;
+        case "533551518763450368":
+            saveImage("Chaeyoung", message);
+            break;
+        case "533551543576821771":
+            saveImage("Tzuyu", message);
+            break;
+        case "533581341866852370":
+            saveImage("Group",  message);
+            break;
         case "533583130091716608":
             saveImage("Memes", message);
             break;
+            
+        // Testing for me
         case "635085774571831309":
             saveGyfcat("Test", message);
             break;
