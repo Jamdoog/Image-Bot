@@ -1,7 +1,7 @@
 # Twicecord-Image-Bot
 
-NOTE: This is moving files to a Google Drive mount using rclone.
-This is not meant to be used in a serious manner as it will download ANY attached image or any image from twitter.
+NOTE: This is moving files to a Google Drive mount using rclone. Can change directory to where ever you want...
+This is not meant to be used in a serious manner as it will download ANY attached image, twitter or gyfcat.
 
 test.js is a test file I wrote for storing code which I couldn't get working and/or test code. It is not required
 
