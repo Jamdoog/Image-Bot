@@ -41,13 +41,28 @@ function download(url, dest) {
     });
 }
 
+
+// I know this is really messy code but it works... 
+// I know taking user input's without checking them is a bad idea but I really don't care enough this
+// is for a discord server about a fucking kpop group...
 function saveImage(path,message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
-    message.attachments.forEach(attachment => {
-        const url = attachment.url;
-        const name = (Math.random(0,100000) * 100000000000000000);
-        const extension = url.split(".")[3];
-        download(url, `../gdrive/${path}/${name}.${extension}`);
-    });
+    if(message.content.startsWith("https://gfycat.com")) {
+        Gyfcat(path, message);
+    }
+    if(message.content.includes("https://pbs.twimg.com/media/")) {
+        Twitter(path, message);
+    }
+    else {
+        message.attachments.forEach(attachment => {
+            const url = attachment.url;
+            const name = (Math.random(0,100000) * 100000000000000000);
+            const extension = url.split(".")[3];
+            download(url, `../gdrive/${path}/${name}.${extension}`);
+        });
+    }
+}
+
+function Twitter(path, message) {
     let msg = message.content.split("\n");
     msg.forEach(element => {
         if(element.toString().startsWith("https://pbs.twimg.com/media/")) {
@@ -56,6 +71,11 @@ function saveImage(path,message) { // Get's a image url and path where it wants 
     });
 }
 
+function Gyfcat(path,message) {
+    const data = message.embeds[0].video.url.split(".");
+    download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+    return;
+}
 
 client.on('ready', () => {
     console.log("Ready!");
@@ -135,7 +155,7 @@ client.on("message", async message => {
             
         // Testing for me
         case "635085774571831309":
-            saveGyfcat("Test", message);
+            saveImage("Test", message);
             break;
     }
 });
