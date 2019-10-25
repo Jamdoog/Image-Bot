@@ -46,7 +46,7 @@ function download(url, dest) {
 // I know taking user input's without checking them is a bad idea but I really don't care enough this
 // is for a discord server about a fucking kpop group...
 function saveImage(path,message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
-    if(message.content.startsWith("https://gfycat.com")) {
+    if(message.content.includes("https://gfycat.com")) {
         Gyfcat(path, message);
     }
     if(message.content.includes("https://pbs.twimg.com/media/")) {
@@ -73,7 +73,18 @@ function Twitter(path, message) {
 
 function Gyfcat(path,message) {
     const data = message.embeds[0].video.url.split(".");
-    download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+    try {
+        download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+    }
+    catch {
+        try { // Sometimes you have to do it twice to actually get it?
+            download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+        }
+        catch {
+            client.channels.get("637238920320516116").send("Failed to download: " + message.content);
+            return;
+        }
+    }
     return;
 }
 
@@ -155,7 +166,7 @@ client.on("message", async message => {
             
         // Testing for me
         case "635085774571831309":
-            saveImage("Test", message);
+            test();
             break;
     }
 });
