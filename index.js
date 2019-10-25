@@ -52,6 +52,14 @@ function saveImage(path,message) { // Get's a image url and path where it wants 
     if(message.content.includes("https://pbs.twimg.com/media/")) {
         Twitter(path, message);
     }
+    if(message.content.includes("https://i.redd.it/")) {
+        Reddit(path, message);
+    }
+    if(message.content.includes("https://www.instagram.com/p/")) {
+        Instagram(path, message); 
+        // Unfortunately discord will only provide a link to the first thumbnail with no vid/more posts available. 
+        // I don't know if I could get the rest, but one photo will suffice as it will probably be reposted elsewhere.
+    }
     else {
         message.attachments.forEach(attachment => {
             const url = attachment.url;
@@ -60,6 +68,16 @@ function saveImage(path,message) { // Get's a image url and path where it wants 
             download(url, `../gdrive/${path}/${name}.${extension}`);
         });
     }
+}
+
+function Reddit(path, message) {
+    let msg = message.content.split("\n");
+    let extension = message.content.split(".");
+    msg.forEach(element => {
+        if(element.toString().startsWith("https://i.redd.it/")) {
+            download(element, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + extension[3]);
+        }
+    });
 }
 
 function Twitter(path, message) {
@@ -86,6 +104,25 @@ function Gyfcat(path,message) {
         }
     }
     return;
+}
+
+function Instagram(path, message) {
+    let msg = message.content.split("\n");
+    msg.forEach(element => {
+        if(element.toString().startsWith("https://www.instagram.com/p/")) {
+            try {
+            download(message.embeds[0].thumbnail.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
+            }
+            catch {
+                try {
+                    download(message.embeds[0].thumbnail.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
+                }
+                catch {
+                    client.channels.get("637238920320516116").send("Failed to download: " + message.content);
+                }
+            }
+        }
+    });
 }
 
 client.on('ready', () => {
@@ -166,7 +203,7 @@ client.on("message", async message => {
             
         // Testing for me
         case "635085774571831309":
-            test();
+            saveImage("Test", message);
             break;
     }
 });
