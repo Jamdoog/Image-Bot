@@ -4,6 +4,11 @@ const config = require("./config.json");
 var http = require('https');
 var fs = require('fs');
 
+function sleep(delay) {
+    var start = new Date().getTime();
+    while (new Date().getTime() < start + delay);
+}
+
 function download(url, dest) {
     return new Promise((resolve, reject) => {
         const file = fs.createWriteStream(dest, { flags: "wx" });
@@ -44,19 +49,21 @@ function download(url, dest) {
 
 // I know this is really messy code but it works... 
 // I know taking user input's without checking them is a bad idea but I really don't care enough this
-// is for a discord server about a fucking kpop group...
-function saveImage(path,message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
+// is for a discord server about a fucking kpop groups...
+function saveImage(path, message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
+    let dir = "Pics";
     if(message.content.includes("https://gfycat.com")) {
-        Gyfcat(path, message);
+        //client.channels.get("637256858909933571").send(message.content);
+        Gyfcat(path, message, dir);
     }
     if(message.content.includes("https://pbs.twimg.com/media/")) {
-        Twitter(path, message);
+        Twitter(path, message, dir);
     }
     if(message.content.includes("https://i.redd.it/")) {
-        Reddit(path, message);
+        Reddit(path, message, dir);
     }
     if(message.content.includes("https://www.instagram.com/p/")) {
-        Instagram(path, message); 
+        Instagram(path, message, dir); 
         // Unfortunately discord will only provide a link to the first thumbnail with no vid/more posts available. 
         // I don't know if I could get the rest, but one photo will suffice as it will probably be reposted elsewhere.
     }
@@ -65,38 +72,39 @@ function saveImage(path,message) { // Get's a image url and path where it wants 
             const url = attachment.url;
             const name = (Math.random(0,100000) * 100000000000000000);
             const extension = url.split(".")[3];
-            download(url, `../gdrive/${path}/${name}.${extension}`);
+            download(url, `../${dir}/${path}/${name}.${extension}`);
         });
     }
 }
 
-function Reddit(path, message) {
+function Reddit(path, message, dir) {
     let msg = message.content.split("\n");
     let extension = message.content.split(".");
     msg.forEach(element => {
         if(element.toString().startsWith("https://i.redd.it/")) {
-            download(element, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + extension[3]);
+            download(element, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + extension[3]);
         }
     });
 }
 
-function Twitter(path, message) {
+function Twitter(path, message, dir) {
     let msg = message.content.split("\n");
     msg.forEach(element => {
         if(element.toString().startsWith("https://pbs.twimg.com/media/")) {
-            download(element, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
+            download(element, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
         }
     });
 }
 
-function Gyfcat(path,message) {
+function Gyfcat(path, message, dir) {
     const data = message.embeds[0].video.url.split(".");
     try {
-        download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+        download(message.embeds[0].video.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
     }
     catch {
         try { // Sometimes you have to do it twice to actually get it?
-            download(message.embeds[0].video.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+            // Turns out you can only get it via the cache of the video, it doesn't work unless resending and cba
+            download(message.embeds[0].video.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
         }
         catch {
             client.channels.get("637238920320516116").send("Failed to download: " + message.content);
@@ -106,16 +114,16 @@ function Gyfcat(path,message) {
     return;
 }
 
-function Instagram(path, message) {
+function Instagram(path, message, dir) {
     let msg = message.content.split("\n");
     msg.forEach(element => {
         if(element.toString().startsWith("https://www.instagram.com/p/")) {
             try {
-            download(message.embeds[0].thumbnail.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
+            download(message.embeds[0].thumbnail.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
             }
             catch {
                 try {
-                    download(message.embeds[0].thumbnail.url, `../gdrive/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
+                    download(message.embeds[0].thumbnail.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + ".jpg");
                 }
                 catch {
                     client.channels.get("637238920320516116").send("Failed to download: " + message.content);
@@ -165,6 +173,8 @@ client.on("message", async message => {
         case "166845635717365761":
             saveImage("Group",  message);
             break;
+        case "639259507247284235":
+            saveImage("Memes", message);
 
         // https://discord.gg/fC76MQG --> TWICE MEMES
         case "533551254723624960":
@@ -204,6 +214,35 @@ client.on("message", async message => {
         // Testing for me
         case "635085774571831309":
             saveImage("Test", message);
+            break;
+
+        // https://discord.gg/010f8cuk8zzWmxvtu --> GOT7 Discord
+        case "180945193472622592":
+            saveImage("Mark", message);
+            break;
+        case "180942174379048960":
+            saveImage("Jaebum", message);
+            break;
+        case "180942506236575744":
+            saveImage("Jackson", message);
+            break;
+        case "180945381763448833":
+            saveImage("Jinyoung", message);
+            break;
+        case "180944610657435648":
+            saveImage("Youngjae", message);
+            break;
+        case "180945466433863682":
+            saveImage("BamBam", message);
+            break;
+        case "180945582230077441":
+            saveImage("Yugyeom", message);
+            break;
+        case "180958244238393344":
+            saveImage("Group7", message);
+            break;
+        case "472415139002318858":
+            saveImage("Coco", message);
             break;
     }
 });

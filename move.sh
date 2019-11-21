@@ -1,0 +1,22 @@
+#!/bin/bash
+mv ~/Pics/Sana/* ~/gdrive/Sana
+mv ~/Pics/Jihyo/* ~/gdrive/Jihyo
+mv ~/Pics/Dahyun/* ~/gdrive/Dahyun
+mv ~/Pics/Mina/* ~/gdrive/Mina
+mv ~/Pics/Jungyeon/* ~/gdrive/Jungyeon
+mv ~/Pics/Momo/* ~/gdrive/Momo
+mv ~/Pics/Nayeon/* ~/gdrive/Nayeon
+mv ~/Pics/Tzuyu/* ~/gdrive/Tzuyu
+mv ~/Pics/Chaeyoung/* ~/gdrive/Chaeyoung
+mv ~/Pics/Memes/* ~/gdrive/Memes
+mv ~/Pics/Group/* ~/gdrive/Group
+mv ~/Pics/Test/* ~/gdrive/Test
+mv ~/Pics/Mark/* ~/got/Mark
+mv ~/Pics/Jinyoung/* ~/got/Jinyoung
+mv ~/Pics/Jaeyoung/* ~/got/Jaeyoung
+mv ~/Pics/Jackson/* ~/got/Jackson
+mv ~/Pics/Jaebum/* ~/got/Jaebum
+mv ~/Pics/Yugyeom/* ~/got/Yugyeom
+mv ~/Pics/Coco/* ~/got/Coco
+mv ~/Pics/Group/* ~/got/Group
+mv ~/Pics/BamBam/* ~/got/BamBam
