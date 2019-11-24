@@ -53,7 +53,8 @@ function download(url, dest) {
 function saveImage(path, message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
     let dir = "Pics";
     if(message.content.includes("https://gfycat.com")) {
-        client.channels.get("648139831532191786").send(message.embeds[0].video.url);
+        //console.log("Sending: " + message.content + "\n" + message.embeds[0].video.url);
+        client.channels.get("648139831532191786").send(message.content + " " + path);
     }
     if(message.content.includes("https://pbs.twimg.com/media/")) {
         Twitter(path, message, dir);
@@ -95,10 +96,11 @@ function Twitter(path, message, dir) {
     });
 }
 
-function Gyfcat(message, dir) {
-    let extension = message.content.split(".");
+function Gyfcat(message) {
+    let extension = message.embeds[0].video.url.split(".");
+    let person = message.content.split(" ");
     try {
-        download(message.content, `../Pics/Gyfcat/` + (Math.random(0,100000) * 10000000000000000) + "." + extension[3]);
+        download(message.embeds[0].video.url, `../Pics/${person[1]}/` + (Math.random(0,100000) * 100000000000000000) + "." + extension[3]);
     }
     catch {
         return;
