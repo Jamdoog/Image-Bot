@@ -53,8 +53,7 @@ function download(url, dest) {
 function saveImage(path, message) { // Get's a image url and path where it wants downloading, renames it a random number and saves to specified place on GDrie
     let dir = "Pics";
     if(message.content.includes("https://gfycat.com")) {
-        //client.channels.get("637256858909933571").send(message.content);
-        Gyfcat(path, message, dir);
+        client.channels.get("648139831532191786").send(message.embeds[0].video.url);
     }
     if(message.content.includes("https://pbs.twimg.com/media/")) {
         Twitter(path, message, dir);
@@ -96,20 +95,13 @@ function Twitter(path, message, dir) {
     });
 }
 
-function Gyfcat(path, message, dir) {
-    const data = message.embeds[0].video.url.split(".");
+function Gyfcat(message, dir) {
+    let extension = message.content.split(".");
     try {
-        download(message.embeds[0].video.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
+        download(message.content, `../Pics/Gyfcat/` + (Math.random(0,100000) * 10000000000000000) + "." + extension[3]);
     }
     catch {
-        try { // Sometimes you have to do it twice to actually get it?
-            // Turns out you can only get it via the cache of the video, it doesn't work unless resending and cba
-            download(message.embeds[0].video.url, `../${dir}/${path}/` + (Math.random(0,100000) * 10000000000000000) + "." + data[3]);
-        }
-        catch {
-            client.channels.get("637238920320516116").send("Failed to download: " + message.content);
-            return;
-        }
+        return;
     }
     return;
 }
@@ -175,6 +167,9 @@ client.on("message", async message => {
             break;
         case "639259507247284235":
             saveImage("Memes", message);
+        case "639259557050318848":
+            saveImage("Fanart", message);
+        
 
         // https://discord.gg/fC76MQG --> TWICE MEMES
         case "533551254723624960":
@@ -214,6 +209,9 @@ client.on("message", async message => {
         // Testing for me
         case "635085774571831309":
             saveImage("Test", message);
+            break;
+        case "648139831532191786":
+            Gyfcat(message);
             break;
 
         // https://discord.gg/010f8cuk8zzWmxvtu --> GOT7 Discord

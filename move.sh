@@ -20,3 +20,4 @@ mv ~/Pics/Yugyeom/* ~/got/Yugyeom
 mv ~/Pics/Coco/* ~/got/Coco
 mv ~/Pics/Group/* ~/got/Group
 mv ~/Pics/BamBam/* ~/got/BamBam
+mv ~/Pics/Gyfcat/* ~/gdrive/Gyfcat
