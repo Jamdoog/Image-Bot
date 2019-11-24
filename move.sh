@@ -3,7 +3,7 @@ mv ~/Pics/Sana/* ~/gdrive/Sana
 mv ~/Pics/Jihyo/* ~/gdrive/Jihyo
 mv ~/Pics/Dahyun/* ~/gdrive/Dahyun
 mv ~/Pics/Mina/* ~/gdrive/Mina
-mv ~/Pics/Jungyeon/* ~/gdrive/Jungyeon
+mv ~/Pics/Jeongyeon/* ~/gdrive/Jeongyeon
 mv ~/Pics/Momo/* ~/gdrive/Momo
 mv ~/Pics/Nayeon/* ~/gdrive/Nayeon
 mv ~/Pics/Tzuyu/* ~/gdrive/Tzuyu
